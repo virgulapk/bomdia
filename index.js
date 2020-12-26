@@ -101,10 +101,6 @@ module.exports.run = client => {
    ====================================================================
   */ 
 
-
-
- // STATUS BOT 
-
 client.on('ready', () => {
 	let activities = [
 			`PK - ${config.prefix}`,
