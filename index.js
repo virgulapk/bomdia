@@ -1,27 +1,16 @@
 const express = require('express');
 const app = express();
-app.get('/', (request, response) => {
-	const ping = new Date();
-	ping.setHours(ping.getHours() - 3);
-	console.log(
-		`╠═══════════( Ping recebido às ${ping.getUTCHours()}:${ping.getUTCMinutes()}:${ping.getUTCSeconds()} )═══════════╣`
-	);
-	response.sendStatus(200);
+app.get("/", (request, response) => {
+  const ping = new Date();
+  ping.setHours(ping.getHours() - 3);
+  console.log(`Ping recebido às ${ping.getUTCHours()}:${ping.getUTCMinutes()}:${ping.getUTCSeconds()}`);
+  response.sendStatus(200);
 });
+app.listen(process.env.PORT); 
 
-app.listen(process.env.PORT);
-
-
-
- /*
-CONSTANTE
-  */ 
-
-
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const config = require('./config.json');
-const prefix = "!";
+const Discord = require("discord.js");
+const client = new Discord.Client(); 
+const config = require("./config.json"); 
 
 const db = require("quick.db");
 const { stripIndents } = require("common-tags");
@@ -106,3 +95,39 @@ module.exports.run = client => {
 	['client', 'guild'].forEach(x => load(x));
 };
 
+
+
+ /*
+   ====================================================================
+  */ 
+
+
+
+ // STATUS BOT 
+
+client.on('ready', () => {
+	let activities = [
+			`PK - ${config.prefix}`,
+			`PK - ${client.guilds.cache.size}`,
+			`PK - ${client.channels.cache.size}`,
+			`PK - ${client.users.cache.size}`
+		],
+		i = 0;
+	setInterval(
+		() =>
+			client.user.setActivity(`${activities[i++ % activities.length]}`, {
+				type: 'WATCHING'
+			}),
+		1000 * 60
+	);
+	client.user.setStatus('dnd').catch(console.error);
+		console.log('╠═══════════( Login )')
+		console.log(`╠═══════════(Logado como ${client.user.tag}`);
+		console.log('╠═══════════( Servers )')
+		console.log(`╠═══════════(Ativo em ${client.guilds.cache.size})`)
+    console.log(
+		`╠═══════════( PING RECEBIDO ÁS 0:00:00 )═══════════╣`
+	)
+});
+
+client.login(process.env.TOKEN);
