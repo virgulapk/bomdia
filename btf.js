@@ -38,9 +38,6 @@ client.on('ready', () => {
 		1000 * 60
 	);
 	client.user.setStatus('dnd').catch(console.error);
-		console.log('╠═══════════( Login )')
-		console.log(`╠═══════════(Logado como ${client.user.tag}`);
-		console.log('╠═══════════( Servers )')
 		console.log(`╠═══════════(Ativo em ${client.guilds.cache.size})`)
 });
 
